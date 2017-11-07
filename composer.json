@@ -1,5 +1,5 @@
 {
-    "name": "steevanb/php-url-test",
+    "name": "huttopia/php-url-test",
     "license": "MIT",
     "type": "lib",
     "description": "Tests all urls of your application",
@@ -16,7 +16,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/steevanb/php-url-test.git"
+            "url": "git@github.com:huttopia/php-url-test.git"
         }
     ]
 }
