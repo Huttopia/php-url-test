@@ -257,7 +257,9 @@ class UrlTest
             CURLOPT_POSTFIELDS => $request->getPostData(),
             CURLOPT_FOLLOWLOCATION => $request->isAllowRedirect(),
             CURLOPT_TIMEOUT => $request->getTimeout(),
-            CURLOPT_USERAGENT => $request->getUserAgent()
+            CURLOPT_USERAGENT => $request->getUserAgent(),
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false
         ]);
 
         return $this;
