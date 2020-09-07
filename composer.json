@@ -9,8 +9,8 @@
     "require": {
         "php": "^7.1",
         "steevanb/php-yaml": "^1.0",
-        "symfony/console": "^3.2||^4.3",
-        "symfony/options-resolver": "^3.2||^4.3"
+        "symfony/console": "^3.2||^4.3||^5.1",
+        "symfony/options-resolver": "^3.2||^4.3||^5.1"
     },
     "bin": ["bin/urltest"],
     "repositories": [
