@@ -259,7 +259,8 @@ class UrlTest
             CURLOPT_TIMEOUT => $request->getTimeout(),
             CURLOPT_USERAGENT => $request->getUserAgent(),
             CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_FORBID_REUSE => true
         ]);
 
         return $this;
