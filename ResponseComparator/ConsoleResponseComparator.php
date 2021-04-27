@@ -61,6 +61,13 @@ class ConsoleResponseComparator implements ResponseComparatorInterface
                 $urlTest->getResponse()->getHeaderSize(),
                 $verbosity
             )
+            ->writeRawHeaders(
+                $responseConfiguration->getHeaderSize(),
+                $urlTest->getResponse()->getHeaderSize(),
+                $urlTest->getConfiguration()->getResponse()->getHeaders(),
+                $urlTest->getResponse()->getHeaders(),
+                $verbosity
+            )
             ->writeHeadersDiff(
                 $urlTest->getConfiguration()->getResponse()->getHeaders(),
                 $urlTest->getConfiguration()->getResponse()->getUnallowedHeaders(),
@@ -76,6 +83,30 @@ class ConsoleResponseComparator implements ResponseComparatorInterface
             ->writeBodyDiff($urlTest, $verbosity)
             ->writeRedirectionDiff($urlTest, $verbosity)
             ->writeRedirectionCountDiff($urlTest, $verbosity);
+
+        return $this;
+    }
+
+    protected function writeRawHeaders(
+        ?int $responseConfigurationHeaderSize,
+        int $responseHeaderSize,
+        ?array $responseConfigurationHeaders,
+        ?array $responseHeaders,
+        int $verbosity
+    ): self {
+        if (
+            $verbosity >= ResponseComparatorInterface::VERBOSITY_VERY_VERBOSE
+            && $responseConfigurationHeaderSize !== $responseHeaderSize
+        ) {
+            echo "Raw expected headers:\n";
+            foreach ($responseConfigurationHeaders as $headerName => $headerValue) {
+                echo '  ' . $headerName . ': ' . $headerValue . "\n";
+            }
+            echo "Raw response headers:\n";
+            foreach ($responseHeaders as $headerName => $headerValue) {
+                echo '  ' . $headerName . ': ' . $headerValue . "\n";
+            }
+        }
 
         return $this;
     }
@@ -245,8 +276,8 @@ class ConsoleResponseComparator implements ResponseComparatorInterface
             foreach ($responseHeaders as $headerName => $headerValue) {
                 $headerWrited = false;
                 foreach ($allowedHeaders ?? [] as $allowedHeaderName => $allowedHeaderValue) {
-                    if ($allowedHeaderName === $headerName) {
-                        if ((string)$allowedHeaderValue === $headerValue) {
+                    if (strtolower($allowedHeaderName) === $headerName) {
+                        if ((string) $allowedHeaderValue === $headerValue) {
                             $this->writeOkValue('  ' . $headerName . ': ' . $headerValue);
                         } else {
                             echo '  ' . $headerName . ': expected ';
@@ -271,9 +302,12 @@ class ConsoleResponseComparator implements ResponseComparatorInterface
                 }
             }
 
-            $responseHeaderNames = array_keys($responseHeaders);
+            $responseHeaderNames = array_map(function ($responseHeader) {
+                return strtolower($responseHeader);
+            }, array_keys($responseHeaders));
+
             foreach ($allowedHeaders ?? [] as $headerName => $headerValue) {
-                if (in_array($headerName, $responseHeaderNames) === false) {
+                if (in_array(strtolower($headerName), $responseHeaderNames) === false) {
                     echo '  expected ';
                     $this->writeExpectedValue($headerName . ': ' . $headerValue);
                     echo ', ';
