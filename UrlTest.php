@@ -196,9 +196,12 @@ class UrlTest
                     $this->valid = false;
                 }
             }
-            $responseHeaderNames = array_keys($this->getResponse()->getHeaders());
+            $responseHeaderNames = array_map(function ($responseHeader) {
+                return strtolower($responseHeader);
+            }, array_keys($this->getResponse()->getHeaders()));
             $responseHeaderValues = $this->getResponse()->getHeaders();
             foreach ($expectedResponse->getHeaders() ?? [] as $headerName => $headerValue) {
+                $headerName = strtolower($headerName);
                 if (
                     in_array($headerName, $responseHeaderNames) === false
                     || (string) $headerValue !== $responseHeaderValues[$headerName]
