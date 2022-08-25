@@ -201,8 +201,9 @@ class UrlTest
             }, array_keys($this->getResponse()->getHeaders()));
             $responseHeaderValues = $this->getResponse()->getHeaders();
             foreach ($expectedResponse->getHeaders() ?? [] as $headerName => $headerValue) {
+                $headerName = strtolower($headerName);
                 if (
-                    in_array(strtolower($headerName), $responseHeaderNames) === false
+                    in_array($headerName, $responseHeaderNames) === false
                     || (string) $headerValue !== $responseHeaderValues[$headerName]
                 ) {
                     $this->valid = false;
