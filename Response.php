@@ -72,7 +72,8 @@ class Response
         ?string $errorMessage = null
     ) {
         $this->urlTest = $urlTest;
-        if (is_resource($curl)) {
+
+        if ($curl instanceof \CurlHandle) {
             $this->time = $time;
             $this->code = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
             $this->numConnects = curl_getinfo($curl, CURLINFO_NUM_CONNECTS);
