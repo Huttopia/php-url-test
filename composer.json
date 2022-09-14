@@ -8,15 +8,19 @@
     },
     "require": {
         "php": "^7.1 || ^8.1",
-        "steevanb/php-yaml": "^1.0",
-        "symfony/console": "^3.2||^4.3||^5.1",
-        "symfony/options-resolver": "^3.2||^4.3||^5.1"
+        "steevanb/php-yaml": "dev-symfony61",
+        "symfony/console": "^3.2||^4.3||^5.1||^6",
+        "symfony/options-resolver": "^3.2||^4.3||^5.1||^6"
     },
     "bin": ["bin/urltest"],
     "repositories": [
         {
             "type": "vcs",
             "url": "git@github.com:huttopia/php-url-test.git"
+        },
+        {
+            "type": "vcs",
+            "url": "git@github.com:Huttopia/php-yaml.git"
         }
     ]
 }
