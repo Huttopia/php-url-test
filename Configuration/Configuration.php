@@ -24,7 +24,12 @@ class Configuration
 
         $return
             ->getRequest()
-            ->setUrl($configuration['request']['url'])
+            ->setUrl(sprintf(
+                '%s://%s%s',
+                $_SERVER['HTTPS'] === 'on' ? 'https' : 'http',
+                $_SERVER['HTTP_HOST'],
+                $configuration['request']['url']
+            ))
             ->setTimeout($configuration['request']['timeout'])
             ->setPort($configuration['request']['port'])
             ->setMethod($configuration['request']['method'])
