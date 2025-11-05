@@ -68,11 +68,16 @@ class UrlTestCommand extends Command
             ->addOption('continue', null, InputOption::VALUE_NONE, 'Start since last fail test.')
             ->addOption('skip', null, InputOption::VALUE_NONE, 'Skip last fail test, use it with --continue.')
             ->addArgument('path', InputArgument::REQUIRED, 'Configuration file name, or directories separated by ",".')
-            ->addArgument('ids', InputArgument::OPTIONAL, 'UrlTest identifiers preg pattern to test.');
+            ->addArgument('ids', InputArgument::OPTIONAL, 'UrlTest identifiers preg pattern to test.')
+            ->addOption('http-host', null, InputOption::VALUE_REQUIRED, 'HTTP_HOST used to test.', 'api.huttosoftv2.local')
+            ->addOption('https', null, InputOption::VALUE_OPTIONAL, 'Protocol used to test.', 'on')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $_SERVER['HTTP_HOST'] = $input->getOption('http-host');
+        $_SERVER['HTTPS'] = $input->getOption('https');
         $ids = $input->getArgument('ids') === null ? null : explode(',', $input->getArgument('ids'));
         $service = $this
             ->createFilteredIdsUrlTestService(

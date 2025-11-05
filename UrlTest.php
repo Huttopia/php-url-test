@@ -219,7 +219,12 @@ class UrlTest
                 $expectedResponse->getRealResponseBodyTransformerName()
             );
             $this->compare($expectedBody, $responseBody);
-            $this->compare($expectedResponse->getBodySize(), $this->getResponse()->getBodySize());
+            $this->compare(
+                $expectedResponse->getBodyTransformerName() && $expectedResponse->getBody()
+                    ? strlen($expectedBody)
+                    : $expectedResponse->getBodySize(),
+                $this->getResponse()->getBodySize(),
+            );
             if ($request->isAllowRedirect() === false && $this->getResponse()->getCode() === 302) {
                 $this->valid = false;
             } elseif ($request->isAllowRedirect()) {
