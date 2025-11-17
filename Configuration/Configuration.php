@@ -24,12 +24,7 @@ class Configuration
 
         $return
             ->getRequest()
-            ->setUrl(sprintf(
-                '%s://%s%s',
-                $_SERVER['HTTPS'] === 'on' ? 'https' : 'http',
-                $_SERVER['HTTP_HOST'],
-                $configuration['request']['url']
-            ))
+            ->setUrl(self::prefixUrl($configuration['request']['url']))
             ->setTimeout($configuration['request']['timeout'])
             ->setPort($configuration['request']['port'])
             ->setMethod($configuration['request']['method'])
@@ -299,6 +294,17 @@ class Configuration
             )
             ->setAllowedTypes('fileName', ['null', 'string']);
         $data['response']['body'] = $responseBodyResolver->resolve($data['response']['body']);
+    }
+
+    private static function prefixUrl(string $url): string {
+        return array_key_exists('HTTPS', $_SERVER) && array_key_exists('HTTP_HOST', $_SERVER)
+            ? sprintf(
+                '%s://%s%s',
+                $_SERVER['HTTPS'] === 'on' ? 'https' : 'http',
+                $_SERVER['HTTP_HOST'],
+                $url
+            )
+            : $url;
     }
 
     /** @var string */
