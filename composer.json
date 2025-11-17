@@ -7,10 +7,10 @@
         "psr-4": { "steevanb\\PhpUrlTest\\": "" }
     },
     "require": {
-        "php": "^7.1 || ^8.1",
-        "steevanb/php-yaml": "dev-symfony61",
-        "symfony/console": "^3.2||^4.3||^5.1||^6",
-        "symfony/options-resolver": "^3.2||^4.3||^5.1||^6"
+        "php": "^8.2",
+        "steevanb/php-yaml": "dev-php82",
+        "symfony/console": "^3.2||^4.3||^5.1||^6||^7",
+        "symfony/options-resolver": "^3.2||^4.3||^5.1||^6||^7"
     },
     "bin": ["bin/urltest"],
     "repositories": [
