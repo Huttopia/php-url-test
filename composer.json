@@ -8,7 +8,7 @@
     },
     "require": {
         "php": "^8.2",
-        "steevanb/php-yaml": "dev-php82",
+        "steevanb/php-yaml": "dev-symfony74",
         "symfony/console": "^3.2||^4.3||^5.1||^6||^7",
         "symfony/options-resolver": "^3.2||^4.3||^5.1||^6||^7"
     },
